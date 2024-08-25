@@ -1,5 +1,5 @@
 # Step 1: Use an official Python runtime as a parent image
-FROM python:3.11-buster
+FROM python:3.11
 
 # python output to docker
 ENV PYTHONUNBUFFERED=1
@@ -12,6 +12,7 @@ COPY requirements.txt .
 
 # Step 4: Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
 
 # Step 5: Copy the rest of the application code into the container
 COPY . .
