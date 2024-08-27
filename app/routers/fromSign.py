@@ -11,6 +11,7 @@ import numpy as np
 import httpx
 from PIL import Image
 from io import BytesIO
+import time
 
 router = APIRouter()
 
@@ -98,7 +99,7 @@ async def fromSign(files: List[UploadFile] = File(...)):
                 except Exception as e:
                     raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
         
-        return {"image_urls": s3_urls, "glosses": fromGloss.glosses}
+        return {"image_urls": s3_urls, "glosses": total_seq_gloss}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
