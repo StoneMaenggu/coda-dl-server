@@ -60,6 +60,7 @@ class G2T_Module:
             for output in output_ids:
                 translation = self.tokenizer.decode(output, skip_special_tokens=True)
                 translations.append(translation)
+        
         return translations
 
 if __name__ == "__main__":
