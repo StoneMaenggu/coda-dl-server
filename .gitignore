@@ -1,5 +1,9 @@
 i2p_test.jpeg
-/app/models/__pycache__
-access.py
-/app/models/utils/trained_model/*.pt
-/app/models/utils/__pycache__
+/app/modules/__pycache__
+/app/modules/utils/access.py
+/app/modules/utils/trained_model/*.pt
+/app/modules/utils/__pycache__
+/app/modules/p2g_modulecnn.py
+/app/modules/utils/timeseries_CNN.py
+/app/modules/utils/gloss_db/*.csv
+

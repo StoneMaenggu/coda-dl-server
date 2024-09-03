@@ -9,13 +9,14 @@ class I2P_Module:
         self.mp_hands = mp.solutions.hands
         self.pose = self.mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.5)
         self.hands = self.mp_hands.Hands(static_image_mode=True, max_num_hands=2, min_detection_confidence=0.5)
-        self.use_pose_idx = [12,14,16,11,13,15]
-        self.use_hand_idx = [0,2,3,4,5,6,8,9,10,12,13,14,16,17,18,20]
+        self.use_pose_idx = [11,13,12,14]
+        self.use_hand_idx = [0,2,4,5,6,8,9,10,12,13,14,16,17,18,20]
         # Initialize MediaPipe Drawing
         self.mp_drawing = mp.solutions.drawing_utils
 
     def predict(self, image, vis=False):
-        
+        h,w,c =  image.shape
+        print(image.shape)
         # Convert the BGR image to RGB
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -88,15 +89,17 @@ class I2P_Module:
             ret.append(np.array(right_hand_landmarks)[self.use_hand_idx,:])
         else:
             ret.append(np.zeros((len(self.use_hand_idx),2)))
-        
-        return np.concatenate(ret,0)
+        ret = np.concatenate(ret,0)
+        if h>w:
+            ret[:,0]=ret[:,0]*0.316+0.342
+        return ret
 
     
 
 if __name__ == '__main__':
 
     # Example usage
-    image_path = '/Users/hyewon/Desktop/FLYAI/project/DLserver/i2p_test.jpeg'  # Replace with your image path
+    image_path = '/home/horang1804/Downloads/sample.jpg'  # Replace with your image path
     # Read the image
     image = cv2.imread(image_path)
     if image is None:
@@ -108,7 +111,7 @@ if __name__ == '__main__':
     i2p_module = I2P_Module()
     
     # predict
-    pose = i2p_module.predict(image, vis=False)
+    pose = i2p_module.predict(image, vis=True)
 
     # check
     print(pose.shape)
